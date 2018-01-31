@@ -1,0 +1,73 @@
+{
+  "name": "myproject",
+  "author": "Enrico Colautti - DoctorC - <doctorc@o2.pl>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enco2009/npm-scripts"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "scripts": {
+    "build": "run-p build:*",
+    "build:css": "run-s stylus",
+    "build:images": "run-s imagemin icons",
+    "build:js": "run-s lint js",
+    "build:pug": "run-s pug",
+    "clean": "rimraf dist/**/*.*",
+    "icons": "svgo -f src/images/icons -o dist/images/icons && svg-sprite-generate -d dist/images/icons -o dist/images/icons/sprite.svg",
+    "imagemin": "imagemin src/images/* -o dist/images",
+    "js": "browserify -d src/js/main.js -t babelify -t envify -t uglifyify -p [minifyify --compressPath . --map main.js.map --output dist/main.js.map] -o dist/main.js",
+    "js:hash": "browserify -d src/js/main.js -t babelify -t envify -t uglifyify -p [minifyify --compressPath . --map main.js.map --output dist/main.js.map] | hashmark -n dist/main.js -s -l 8 -m assets.json \"dist/{name}.{hash}{ext}\"",
+    "lint": "eslint **.js",
+    "postinstall": "run-s build watch",
+    "pug": "pug src/pug/index.pug --out dist",
+    "serve": "browser-sync start --server \"dist\" --files \"dist/*.css, dist/*.js, **/*.html, !node_modules/**/*.html\"",
+    "stylus": "stylus -u autoprefixer-stylus -c src/styles/main.styl > dist/main.css",
+    "stylus:hash": "stylus -u autoprefixer-stylus -c src/styles/main.styl > dist/main.css | hashmark -n dist/main.css -s -l 5 -m assets.json \"dist/{name}.{hash}{ext}\"",
+    "test": "mocha test/",
+    "watch:css": "onchange \"src/styles\" -- run-s build:css",
+    "watch:images": "onchange \"src/images\" -- run-s build:images",
+    "watch:js": "onchange \"src/js\" -- run-s build:js",
+    "watch:pug": "onchange \"src/pug\" -- run-s build:pug",
+    "watch": "run-p serve watch:*"
+  },
+  "devDependencies": {
+    "autoprefixer": "latest",
+    "autoprefixer-stylus": "latest",
+    "babel-core": "latest",
+    "babel-preset-env": "latest",
+    "babel-preset-es2015": "latest",
+    "babelify": "latest",
+    "browser-sync": "latest",
+    "browserify": "latest",
+    "envify": "latest",
+    "eslint": "latest",
+    "eslint-config-standard": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-node": "latest",
+    "eslint-plugin-promise": "latest",
+    "eslint-plugin-standard": "latest",
+    "hashmark": "latest",
+    "imagemin-cli": "latest",
+    "imagemin-gifsicle": "latest",
+    "minifyify": "latest",
+    "mocha": "latest",
+    "npm-run-all": "latest",
+    "onchange": "latest",
+    "postcss-cli": "latest",
+    "pug": "latest",
+    "pug-cli": "latest",
+    "rimraf": "latest",
+    "stylus": "latest",
+    "svg-sprite-generator": "latest",
+    "svgo": "latest",
+    "uglify-js": "latest",
+    "uglifyify": "latest"
+  },
+  "dependencies": {
+  }
+}
