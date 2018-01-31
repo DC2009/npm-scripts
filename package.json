@@ -14,7 +14,7 @@
   "scripts": {
     "build": "run-p build:*",
     "build:css": "run-s stylus",
-    "build:images": "run-s imagemin icons",
+    "build:images": "run-p imagemin icons",
     "build:js": "run-s lint js",
     "build:pug": "run-s pug",
     "clean": "rimraf dist/**/*.*",
